@@ -3,3 +3,5 @@ pylint
 pydocstyle
 pycodestyle
 mypy
+pillow
+matplotlib

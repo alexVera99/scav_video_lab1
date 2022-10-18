@@ -1,4 +1,4 @@
-"""Solution exercise 3"""
+"""Solution exercise 3."""
 
 
 import logging
@@ -9,10 +9,8 @@ from exercise_2 import rename_from_path, exec_in_shell_wrapper
 def to_grayscale_and_compress_ffmpeg(img_path: pathlib.Path,
                                      compression_level: int = 6,
                                      out_filename: str = ""):
-    """
-    Convert image to grayscale and applies some compression based on \
+    """Convert image to grayscale and applies some compression based on \
     the compression_level.
-
 
     :param img_path: image filename path
     :param compression_level: number from 0 to 6 that sets the compression\

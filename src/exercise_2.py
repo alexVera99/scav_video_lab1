@@ -1,4 +1,4 @@
-"""Solution for Exercise 2"""
+"""Solution for Exercise 2."""
 
 
 import logging
@@ -8,7 +8,8 @@ import subprocess
 
 def exec_in_shell_wrapper(cmd: list):
     """
-    Execute command in Linux shell
+    Execute command in Linux shell.
+
     :param cmd: command to execute. Type: list
     :return: string with the stderr
     """
@@ -58,7 +59,7 @@ def resize_using_ffmpeg(img_path: pathlib.Path,
     new_filename = rename_from_path(img_path, out_filename)
 
     cmd = ["ffmpeg", "-y", "-i", img_path, "-vf",
-               f"scale={width}:{height}", new_filename]
+           f"scale={width}:{height}", new_filename]
 
     stderr = exec_in_shell_wrapper(cmd)
 

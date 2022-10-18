@@ -1,3 +1,6 @@
+"""Solution for Exercise 4"""
+
+
 def run_length_code_str_byte_sequence(sequence: bytes,
                                       encoding: str = "utf-8") -> str:
     """
@@ -42,9 +45,9 @@ def main():
     Show an example of how to use the constructed functions.
     :return: no return
     """
-    st = b"wwwwaaadexxxxxxywww"
+    byte_string_sequence = b"wwwwaaadexxxxxxywww"
 
-    code = run_length_code_str_byte_sequence(st)
+    code = run_length_code_str_byte_sequence(byte_string_sequence)
 
     print(code)
 

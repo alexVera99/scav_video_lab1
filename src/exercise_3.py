@@ -36,19 +36,19 @@ def to_grayscale_and_compress_ffmpeg(img_path: pathlib.Path,
            "-compression_level", str(compression_level),
            new_filename]
 
-    run_cmd = subprocess.Popen(cmd,
-                               stdout=subprocess.PIPE,
-                               stderr=subprocess.PIPE)
+    with subprocess.Popen(cmd,
+                          stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE) as run_cmd:
 
-    _, stderr = run_cmd.communicate()
+        _, stderr = run_cmd.communicate()
 
     # Convert to str
     stderr = stderr.decode('ascii')
     print(stderr)
 
     if stderr.lower().__contains__("error"):
-        logging.exception(f"Could not convert the image {img_path.name} "
-                          "to grayscale.")
+        logging.exception("Could not convert the image %s to grayscale.",
+                          img_path.name)
         logging.error(stderr)
 
 

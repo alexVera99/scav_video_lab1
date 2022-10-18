@@ -26,36 +26,36 @@ def rename_from_path(filename_path: pathlib.Path,
 
 
 def resize_using_ffmpeg(img_path: pathlib.Path,
-                        w: int, h: int, out_filename: str = ""):
+                        width: int, height: int, out_filename: str = ""):
     """
     Resize an image with based on the given width and height.
 
     :param img_path: image filename path
-    :param w: target width
-    :param h: target height
+    :param width: target width
+    :param height: target height
     :param out_filename: output image filename
     :return: no return
     """
     if out_filename == "":
         img_name = img_path.name.split(".")[0]
-        out_filename = f"{img_name}_resize_{w}x{h}"
+        out_filename = f"{img_name}_resize_{width}x{height}"
 
     new_filename = rename_from_path(img_path, out_filename)
 
-    command = ["ffmpeg", "-y", "-i", img_path, "-vf",
-               f"scale={w}:{h}", new_filename]
+    cmd = ["ffmpeg", "-y", "-i", img_path, "-vf",
+               f"scale={width}:{height}", new_filename]
 
-    test = subprocess.Popen(command,
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE)
+    with subprocess.Popen(cmd,
+                          stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE) as run_cmd:
 
-    stdout, stderr = test.communicate()
+        _, stderr = run_cmd.communicate()
 
     # Convert to str
     stderr = stderr.decode('ascii')
 
     if stderr.lower().__contains__("error"):
-        logging.exception(f"Could not resize the image {img_path.name}")
+        logging.exception("Could not resize the image %s", img_path.name)
         logging.error(stderr)
 
 

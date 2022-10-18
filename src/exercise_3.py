@@ -3,8 +3,7 @@
 
 import logging
 import pathlib
-import subprocess
-from exercise_2 import rename_from_path
+from exercise_2 import rename_from_path, exec_in_shell_wrapper
 
 
 def to_grayscale_and_compress_ffmpeg(img_path: pathlib.Path,
@@ -36,15 +35,10 @@ def to_grayscale_and_compress_ffmpeg(img_path: pathlib.Path,
            "-compression_level", str(compression_level),
            new_filename]
 
-    with subprocess.Popen(cmd,
-                          stdout=subprocess.PIPE,
-                          stderr=subprocess.PIPE) as run_cmd:
-
-        _, stderr = run_cmd.communicate()
+    stderr = exec_in_shell_wrapper(cmd)
 
     # Convert to str
     stderr = stderr.decode('ascii')
-    print(stderr)
 
     if stderr.lower().__contains__("error"):
         logging.exception("Could not convert the image %s to grayscale.",

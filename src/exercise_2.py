@@ -6,6 +6,21 @@ import pathlib
 import subprocess
 
 
+def exec_in_shell_wrapper(cmd: list):
+    """
+    Execute command in Linux shell
+    :param cmd: command to execute. Type: list
+    :return: string with the stderr
+    """
+    with subprocess.Popen(cmd,
+                          stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE) as run_cmd:
+
+        _, stderr = run_cmd.communicate()
+
+    return stderr
+
+
 def rename_from_path(filename_path: pathlib.Path,
                      new_filename: str,
                      new_extension: str = None) -> pathlib.Path:
@@ -45,11 +60,7 @@ def resize_using_ffmpeg(img_path: pathlib.Path,
     cmd = ["ffmpeg", "-y", "-i", img_path, "-vf",
                f"scale={width}:{height}", new_filename]
 
-    with subprocess.Popen(cmd,
-                          stdout=subprocess.PIPE,
-                          stderr=subprocess.PIPE) as run_cmd:
-
-        _, stderr = run_cmd.communicate()
+    stderr = exec_in_shell_wrapper(cmd)
 
     # Convert to str
     stderr = stderr.decode('ascii')
